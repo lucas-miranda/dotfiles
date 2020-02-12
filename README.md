@@ -1,2 +1,1 @@
-# dev-env
-Every development environment configs
+Configuration folders to all tools that I use everyday.
