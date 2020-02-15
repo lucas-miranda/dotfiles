@@ -1,7 +1,7 @@
-import subprocess
+import os, subprocess
 from libqtile.config import Key, Screen, Group, Match
 from libqtile.command import lazy
-from libqtile import bar, widget
+from libqtile import bar, widget, hook
 
 #
 
@@ -33,6 +33,11 @@ def next_prev(state):
             qtile.cmd_spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.%s" % cmd)
 
     return f
+
+# desktop
+
+def set_wallpaper(path):
+    os.system('feh --bg-scale %s' % path)
 
 #
 
@@ -160,3 +165,9 @@ groups.extend([
 ])
 
 focus_on_window_activation = 'never'
+
+#
+
+@hook.subscribe.startup
+def autostart():
+    set_wallpaper('~/Imagens/1086871-persona-5-wallpapers-1920x1080-for-ipad.jpg')
