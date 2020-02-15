@@ -14,25 +14,21 @@ def is_spotify_running():
     spotify_processes = spotify_processes_b.stdout.decode("utf-8")
     return len(spotify_processes) > 0
 
-def set_volume():
-    if not is_spotify_running():
-        return
-
-    spotify_processes_b = subprocess.run(["dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.Volume"], capture_output=True)
-    spotify_processes = spotify_processes_b.stdout.decode("utf-8")
-
-def playpause(qtile):
+def media_playpause(qtile):
     if is_spotify_running():
         qtile.cmd_spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
 
-def next_prev(state):
-    def f(qtile):
-        cmd = "Next" if state == "next" else "Previous"
+def media_next(qtile):
+    if not is_spotify_running():
+        return
 
-        if is_spotify_running():
-            qtile.cmd_spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.%s" % cmd)
+    qtile.cmd_spawn('dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next')
 
-    return f
+def media_previous(qtile):
+    if not is_spotify_running():
+        return
+
+    qtile.cmd_spawn('dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous')
 
 # desktop
 
@@ -70,11 +66,11 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)),
     Key([super_key], "equal", lazy.spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)),
     Key([], "XF86AudioMute", lazy.spawn("amixer -D pulse set Master toggle")),
-    Key([], "XF86AudioPlay", lazy.function(playpause)),
-    Key([], "XF86AudioNext", lazy.function(next_prev("next"))),
-    Key([super_key], "bracketleft", lazy.function(next_prev("next"))),
-    Key([], "XF86AudioPrev", lazy.function(next_prev("prev"))),
-    Key([super_key], "bracketright", lazy.function(next_prev("prev"))),
+    Key([], "XF86AudioPlay", lazy.function(media_playpause)),
+    Key([], "XF86AudioNext", lazy.function(media_next)),
+    Key([super_key], "bracketleft", lazy.function(media_next)),
+    Key([], "XF86AudioPrev", lazy.function(media_previous)),
+    Key([super_key], "bracketright", lazy.function(media_previous)),
     Key([super_key], "v", lazy.spawn("pavucontrol")),
 
     # quick launch
@@ -136,7 +132,7 @@ screens = [
     )
 ]
 
-groups = [Group(i) for i in 'asd']
+groups = [Group(i) for i in 'asdf']
 
 # throwaway groups for random stuff
 for i in groups:
