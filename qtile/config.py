@@ -42,6 +42,7 @@ alt_key = "mod1"
 
 keys = [
     Key([super_key], "r", lazy.spawncmd()),
+    Key([super_key, "shift"], "F4", lazy.shutdown()),
 
     # reload qtile configs
     Key([super_key, "shift"], "r", lazy.restart()),
@@ -122,10 +123,10 @@ screens = [
                     card_id=audio_card_id, 
                     **widget_defaults
                 ),
-                widget.QuickExit(
-                    default_text='[ S ]', 
-                    countdown_format='[ {} ]'
-                ),
+                #widget.QuickExit(
+                #    default_text='[ S ]', 
+                #    countdown_format='[ {} ]'
+                #),
             ],
             24,
         ),
