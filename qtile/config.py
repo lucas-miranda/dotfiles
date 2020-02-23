@@ -54,7 +54,9 @@ keys = [
     Key([super_key], "h", lazy.layout.previous()),
     Key([super_key], "l", lazy.layout.next()),
     Key([super_key, "shift"], "l", lazy.screen.next_group()),
+    Key([super_key, "shift"], "Right", lazy.screen.next_group()),
     Key([super_key, "shift"], "h", lazy.screen.prev_group()),
+    Key([super_key, "shift"], "Left", lazy.screen.prev_group()),
     Key([super_key], "w", lazy.screen.toggle_floating()),
 
     # close focused window
