@@ -1,7 +1,7 @@
 import os, subprocess
-from libqtile.config import Key, Screen, Group, Match
+from libqtile.config import Key, Screen, Group, Match, Click, Drag
 from libqtile.command import lazy
-from libqtile import bar, widget, hook
+from libqtile import layout, bar, widget, hook
 
 #
 
@@ -42,26 +42,38 @@ alt_key = "mod1"
 
 keys = [
     Key([super_key], "r", lazy.spawncmd()),
-    Key([super_key, "shift"], "F4", lazy.shutdown()),
+    Key([super_key, alt_key], "Delete", lazy.shutdown()),
+    Key([super_key, alt_key], "Insert", lazy.restart()), # reload qtile configs
 
-    # reload qtile configs
-    Key([super_key, "shift"], "r", lazy.restart()),
-
-    # switch to next panel in the stack
-    Key([alt_key], "Tab", lazy.layout.next()),
-    Key([super_key], "k", lazy.layout.down()),
-    Key([super_key], "j", lazy.layout.up()),
-    Key([super_key], "h", lazy.layout.previous()),
-    Key([super_key], "l", lazy.layout.next()),
-    Key([super_key, "shift"], "l", lazy.screen.next_group()),
+    # groups
     Key([super_key, "shift"], "Right", lazy.screen.next_group()),
-    Key([super_key, "shift"], "h", lazy.screen.prev_group()),
     Key([super_key, "shift"], "Left", lazy.screen.prev_group()),
-    Key([super_key], "w", lazy.screen.toggle_floating()),
 
-    # close focused window
+    # layout
+    Key([alt_key], "Tab", lazy.layout.next()),
+    Key([super_key], "h", lazy.layout.left()),
+    Key([super_key], "l", lazy.layout.right()),
+    Key([super_key], "j", lazy.layout.up()),
+    Key([super_key], "k", lazy.layout.down()),
+    Key([super_key, "shift"], "h", lazy.layout.swap_left()),
+    Key([super_key, "shift"], "l", lazy.layout.swap_right()),
+    Key([super_key, "shift"], "j", lazy.layout.shuffle_down()),
+    Key([super_key, "shift"], "k", lazy.layout.shuffle_up()),
+    Key([super_key], "i", lazy.layout.grow()),
+    Key([super_key], "m", lazy.layout.shrink()),
+    Key([super_key], "n", lazy.layout.normalize()),
+    Key([super_key], "o", lazy.layout.maximize()),
+    Key([super_key, "shift"], "space", lazy.layout.flip()),
+
+    # layouts
+    Key([super_key], "Down", lazy.prev_layout()),
+    Key([super_key], "Up", lazy.next_layout()),
+
+    # window handling
     Key([alt_key], "F4", lazy.window.kill()),
     Key([super_key], "x", lazy.window.kill()),
+    Key([super_key], "w", lazy.window.toggle_floating()),
+    Key([super_key], "m", lazy.layout.maximize()),
 
     # ~ Audio
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)),
@@ -101,6 +113,10 @@ screens = [
                     highlight_method='text',
                     urgent_alert_method='text'
                 ),
+                widget.Spacer(length=5),
+                widget.CurrentLayoutIcon(
+                    scale=.6
+                ),
                 widget.Spacer(length=20),
                 widget.WindowName(
                     foreground='C4C4C4'
@@ -131,7 +147,26 @@ screens = [
                 #),
             ],
             24,
-        ),
+        )
+    )
+]
+
+mouse = [
+    # move window around
+    Drag(
+        [super_key], "Button1", lazy.window.set_position_floating(),
+        start = lazy.window.get_position()
+    ),
+
+    # resize window
+    Drag(
+        [super_key], "Button3", lazy.window.set_size_floating(),
+        start = lazy.window.get_size()
+    ),
+
+    # bring window to front
+    Click(
+        [super_key, alt_key], "Button1", lazy.window.bring_to_front()
     )
 ]
 
@@ -160,8 +195,34 @@ groups.extend([
         matches=[
             Match(wm_class=['spotify', 'Spotify'], wm_instance_class=['spotify', 'Spotify'])
         ]
-    ),
+    )
 ])
+
+layouts = [
+    layout.Max(),
+    layout.Floating(
+        float_rules=[
+            dict(role='About'),
+            dict(wmclass='file_progress'),
+            dict(wmclass='megasync')
+        ],
+        auto_float_types={
+            'toolbar', 
+            'utility', 
+            'splash', 
+            'dialog', 
+            'notification'
+        },
+        border_focus='#572b66',
+        border_normal='#878787',
+        border_width=1
+    ),
+    layout.MonadTall(
+        border_focus='#572b66',
+        border_normal='#878787',
+        border_width=1
+    )
+]
 
 focus_on_window_activation = 'never'
 
