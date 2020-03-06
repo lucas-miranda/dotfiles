@@ -121,7 +121,11 @@ screens = [
                 widget.WindowName(
                     foreground='C4C4C4'
                 ),
-                widget.Prompt(**widget_defaults),
+                widget.Prompt(
+                    ignore_dups_history=True,
+                    prompt='λ ',
+                    **widget_defaults
+                ),
                 #widget.Mpris2(
                 #    name='spotify',
                 #    objname="org.mpris.MediaPlayer2.spotify",
