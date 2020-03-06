@@ -77,9 +77,9 @@ keys = [
 
     # ~ Audio
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)),
-    Key([super_key], "minus", lazy.spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)),
+    Key([super_key], "equal", lazy.spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)),
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)),
-    Key([super_key], "equal", lazy.spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)),
+    Key([super_key], "minus", lazy.spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)),
     Key([], "XF86AudioMute", lazy.spawn("amixer -D pulse set Master toggle")),
     Key([], "XF86AudioPlay", lazy.function(media_playpause)),
     Key([], "XF86AudioNext", lazy.function(media_next)),
