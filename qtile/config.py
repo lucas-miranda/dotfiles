@@ -145,6 +145,7 @@ screens = [
                     card_id=audio_card_id, 
                     **widget_defaults
                 ),
+                widget.Spacer(length=10),
                 #widget.QuickExit(
                 #    default_text='[ S ]', 
                 #    countdown_format='[ {} ]'
