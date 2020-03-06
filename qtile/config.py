@@ -177,7 +177,7 @@ mouse = [
 
 groups = [Group(i) for i in 'asdf']
 
-# throwaway groups for random stuff
+# throw away groups for random stuff
 for i in groups:
     # super + letter of group = switch to group
     keys.append(
