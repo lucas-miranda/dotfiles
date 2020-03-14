@@ -30,6 +30,28 @@ def media_previous(qtile):
 
     qtile.cmd_spawn('dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous')
 
+def show_media_volume_notify(qtile):
+    volume = qtile.widgets_map["volume"].get_volume()
+
+    icon_name = '/usr/share/icons/zafiro-purple/panel/22/audio-volume-off.svg'
+    if volume > 0:
+        if volume <= 30:
+            icon_name = '/usr/share/icons/zafiro-purple/panel/22/audio-volume-low-symbolic.svg'
+        elif volume <= 70:
+            icon_name = '/usr/share/icons/zafiro-purple/panel/22/audio-volume-medium-symbolic.svg'
+        else:
+            icon_name = '/usr/share/icons/zafiro-purple/panel/22/audio-volume-high-symbolic.svg'
+
+    qtile.cmd_spawn('notify-send --urgency=low --expire-time=400 --category=device --icon=%s "Media" "Volume: %d%%"' % (icon_name, volume));
+
+def media_raise_volume(qtile):
+    qtile.cmd_spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)
+    show_media_volume_notify(qtile)
+
+def media_lower_volume(qtile):
+    qtile.cmd_spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)
+    show_media_volume_notify(qtile)
+
 # desktop
 
 def set_wallpaper(path):
@@ -76,10 +98,10 @@ keys = [
     Key([super_key], "m", lazy.layout.maximize()),
 
     # ~ Audio
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)),
-    Key([super_key], "equal", lazy.spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)),
-    Key([super_key], "minus", lazy.spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)),
+    Key([], "XF86AudioRaiseVolume", lazy.function(media_raise_volume)),
+    Key([super_key], "equal", lazy.function(media_raise_volume)),
+    Key([], "XF86AudioLowerVolume", lazy.function(media_lower_volume)),
+    Key([super_key], "minus", lazy.function(media_lower_volume)),
     Key([], "XF86AudioMute", lazy.spawn("amixer -D pulse set Master toggle")),
     Key([], "XF86AudioPlay", lazy.function(media_playpause)),
     Key([], "XF86AudioNext", lazy.function(media_next)),
