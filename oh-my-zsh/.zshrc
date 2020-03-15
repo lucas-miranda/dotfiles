@@ -2,6 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 path+=('/home/luke/.cargo/bin')
+path+=('/home/luke/bin')
 export PATH
 
 export XDG_CONFIG_HOME="/home/luke/.config"
@@ -13,7 +14,7 @@ export ZSH="/home/luke/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="avit"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -74,7 +75,6 @@ ZSH_THEME="agnoster"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git
     vi-mode
     git-extras
     extract
@@ -121,5 +121,13 @@ export FZF_DEFAULT_COMMAND="fdfind --type file --hidden --follow --no-ignore-vcs
 # Completion for kitty
 #~/.local/kitty.app/bin/kitty + complete setup zsh | source /dev/stdin
 
-# dofus
-#alias dofus=./'.config/Ankama\ Launcher/Ankama\ Launcher-Setup-x86_64.AppImage' --no-sandbox
+# git aliases
+alias gl="git log --oneline --graph --max-count=20"
+alias gs="git status"
+alias gd="git diff"
+alias gpl="git pull"
+alias gp="git push"
+alias gaac="git add . && git commit -e"
+alias gaic="git add -i && git commit -e"
+alias grh="git reset --hard HEAD"
+alias grst="git reset HEAD -- ."
