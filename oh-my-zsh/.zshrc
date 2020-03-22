@@ -1,6 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+
 path+=('/home/luke/.cargo/bin')
 path+=('/home/luke/bin')
 export PATH
@@ -75,7 +76,7 @@ ZSH_THEME="avit"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    vi-mode
+    # vi-mode
     git-extras
     extract
     web-search
@@ -92,11 +93,7 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -105,21 +102,6 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-alias fd=fdfind
-export FZF_DEFAULT_COMMAND="fdfind --type file --hidden --follow --no-ignore-vcs --exclude .git"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# kitty specifics
-#autoload -Uz compinit
-#compinit
-# Completion for kitty
-#~/.local/kitty.app/bin/kitty + complete setup zsh | source /dev/stdin
 
 # git aliases
 alias gl="git log --oneline --graph --max-count=20"
@@ -131,3 +113,16 @@ alias gaac="git add . && git commit -e"
 alias gaic="git add -i && git commit -e"
 alias grh="git reset --hard HEAD"
 alias grst="git reset HEAD -- ."
+
+#
+
+alias fd=fdfind
+export FZF_DEFAULT_COMMAND="fdfind --type file --hidden --follow --no-ignore-vcs --exclude .git"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# kitty specifics
+#autoload -Uz compinit
+#compinit
+# Completion for kitty
+#~/.local/kitty.app/bin/kitty + complete setup zsh | source /dev/stdin
