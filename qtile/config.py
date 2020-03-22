@@ -1,11 +1,21 @@
 import os, subprocess
+import math
+from datetime import datetime
 from libqtile.config import Key, Screen, Group, Match, Click, Drag
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
+from widgets.audio import Audio
 
-#
+# settings
 
 audio_card_id = 0
+volume_modify_strategy = 'incremental' # accepted values: 'incremental', 'flat'
+volume_base_modify_value = 2
+
+# control values
+
+volume_incremental = 0
+volume_last_modify_datetime = None
 
 # media
 
@@ -44,13 +54,39 @@ def show_media_volume_notify(qtile):
 
     qtile.cmd_spawn('notify-send --urgency=low --expire-time=400 --category=device --icon=%s "Media" "Volume: %d%%"' % (icon_name, volume));
 
+def update_volume_incremental(operation):
+    if volume_incremental == 0 or volume_last_modify_datetime == None or math.copysign(1, volume_incremental) != operation:
+        volume_incremental = volume_base_modify_value * operation
+    else:
+        time_since_last_usage = datatime.now() - volume_last_modify_datetime
+
+        if time_since_last_usage.seconds > 1:
+            volume_incremental = volume_base_modify_value * operation
+        else:
+            volume_incremental = volume_incremental * 2
+
+    volume_last_modify_datetime = datatime.now()
+
 def media_raise_volume(qtile):
-    qtile.cmd_spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)
+    #if volume_modify_strategy == 'incremental':
+        #update_volume_incremental(1)
+        #print("volume inc: %.0f" % volume_incremental)
+        #qtile.cmd_spawn("amixer --card %d --quiet set Master %.0fdB+" % (audio_card_id, volume_incremental))
+    qtile.widgets_map["audio"].volume_increase()
     show_media_volume_notify(qtile)
+    #else: # flat
+        #qtile.cmd_spawn("amixer --card %d --quiet set Master %ddB+" % (audio_card_id, volume_base_modify_value))
 
 def media_lower_volume(qtile):
-    qtile.cmd_spawn("amixer --card %d --quiet set Master 2dB-" % audio_card_id)
+    qtile.widgets_map["audio"].volume_decrease()
     show_media_volume_notify(qtile)
+    #if volume_modify_strategy == 'incremental':
+        #update_volume_incremental(-1)
+        #print("volume inc: %.0f" % volume_incremental)
+        #qtile.cmd_spawn("amixer --card %d --quiet set Master %.0fdB-" % (audio_card_id, math.fabs(volume_incremental)))
+        #qtile.cmd_spawn("amixer --card %d --quiet set Master %ddB-" % (audio_card_id, volume_base_modify_value))
+    #else: # flat
+        #qtile.cmd_spawn("amixer --card %d --quiet set Master %ddB-" % (audio_card_id, volume_base_modify_value))
 
 # desktop
 
@@ -163,8 +199,12 @@ screens = [
                     format=' %H:%M, %a %d/%m/%Y', 
                     **widget_defaults
                 ),
-                widget.Volume(
-                    card_id=audio_card_id, 
+                #widget.Volume(
+                #    card_id=audio_card_id, 
+                #    **widget_defaults
+                #),
+                Audio(
+                    volume_strategy='incremental',
                     **widget_defaults
                 ),
                 widget.Spacer(length=10),
