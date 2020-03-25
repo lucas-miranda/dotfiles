@@ -3,7 +3,7 @@
 
 
 path+=('/home/luke/.cargo/bin')
-path+=('/home/luke/bin')
+path+=('/home/luke/.local/bin')
 export PATH
 
 export XDG_CONFIG_HOME="/home/luke/.config"
