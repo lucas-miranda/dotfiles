@@ -1,10 +1,11 @@
-import os, subprocess
+import os, os.path, subprocess
 from libqtile.config import Key, Screen, Group, Match, Click, Drag
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 
 #
 
+home = os.path.expanduser('~')
 audio_card_id = 0
 
 # media
@@ -33,16 +34,20 @@ def media_previous(qtile):
 def show_media_volume_notify(qtile):
     volume = qtile.widgets_map["volume"].get_volume()
 
-    icon_name = '/usr/share/icons/zafiro-purple/panel/22/audio-volume-off.svg'
-    if volume > 0:
-        if volume <= 30:
-            icon_name = '/usr/share/icons/zafiro-purple/panel/22/audio-volume-low-symbolic.svg'
-        elif volume <= 70:
-            icon_name = '/usr/share/icons/zafiro-purple/panel/22/audio-volume-medium-symbolic.svg'
-        else:
-            icon_name = '/usr/share/icons/zafiro-purple/panel/22/audio-volume-high-symbolic.svg'
+    icon_name = ''
 
-    qtile.cmd_spawn('notify-send --urgency=low --expire-time=400 --category=device --icon=%s "Media" "Volume: %d%%"' % (icon_name, volume));
+    if volume < 0:
+        icon_name = 'audio-output-none'
+    elif volume == 0:
+        icon_name = 'audio-volume-muted'
+    elif volume <= 30:
+        icon_name = 'audio-volume-low'
+    elif volume <= 80:
+        icon_name = 'audio-volume-medium'
+    else:
+        icon_name = 'audio-volume-high'
+
+    qtile.cmd_spawn(f'/home/luke/.local/bin/notify-send.py "Media" "Volume: {volume}%" --hint string:image-path:{icon_name} boolean:transient:true --expire-time 400 --replaces-process "volume-popup"')
 
 def media_raise_volume(qtile):
     qtile.cmd_spawn("amixer --card %d --quiet set Master 2dB+" % audio_card_id)
@@ -55,7 +60,10 @@ def media_lower_volume(qtile):
 # desktop
 
 def set_wallpaper(path):
-    os.system('feh --bg-scale %s' % path)
+    os.system(f'feh --bg-scale "{path}"')
+
+def refresh_wallpaper():
+    os.system(os.path.join(home, ".local/bin/refresh-wallpaper"))
 
 #
 
@@ -257,4 +265,4 @@ focus_on_window_activation = 'never'
 
 @hook.subscribe.startup
 def autostart():
-    set_wallpaper('~/Imagens/1086871-persona-5-wallpapers-1920x1080-for-ipad.jpg')
+    refresh_wallpaper()
