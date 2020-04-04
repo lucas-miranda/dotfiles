@@ -235,29 +235,45 @@ groups.extend([
 
 layouts = [
     layout.Max(),
-    layout.Floating(
-        float_rules=[
-            dict(role='About'),
-            dict(wmclass='file_progress'),
-            dict(wmclass='megasync')
-        ],
-        auto_float_types={
-            'toolbar', 
-            'utility', 
-            'splash', 
-            'dialog', 
-            'notification'
-        },
-        border_focus='#572b66',
-        border_normal='#878787',
-        border_width=1
-    ),
     layout.MonadTall(
         border_focus='#572b66',
         border_normal='#878787',
         border_width=1
     )
 ]
+
+floating_layout = layout.Floating(
+    float_rules=[
+        dict(role='About'),
+        dict(wmclass='file_progress'),
+        dict(wmclass='megasync'),
+        {'wmclass': 'confirm'},
+        {'wmclass': 'dialog'},
+        {'wmclass': 'download'},
+        {'wmclass': 'error'},
+        {'wmclass': 'file_progress'},
+        {'wmclass': 'notification'},
+        {'wmclass': 'splash'},
+        {'wmclass': 'toolbar'},
+        {'wmclass': 'confirmreset'},  # gitk
+        {'wmclass': 'makebranch'},  # gitk
+        {'wmclass': 'maketag'},  # gitk
+        {'wname': 'branchdialog'},  # gitk
+        {'wname': 'pinentry'},  # GPG key password entry
+        {'wmclass': 'ssh-askpass'},  # ssh-askpass
+    ],
+    auto_float_types={
+        'toolbar', 
+        'utility', 
+        'splash', 
+        'dialog', 
+        'notification'
+    },
+    border_focus='#572b66',
+    border_normal='#878787',
+    border_width=1,
+    #no_reposition_match=True  # It doesn't work very well and freezes most times
+)
 
 focus_on_window_activation = 'never'
 
