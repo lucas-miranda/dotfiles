@@ -116,8 +116,15 @@ alias grst="git reset HEAD -- ."
 
 #
 
-alias fd=fdfind
-export FZF_DEFAULT_COMMAND="fdfind --type file --hidden --follow --no-ignore-vcs --exclude .git"
+fd_command="fd"
+
+if [[ "$OSTYPE" == "win32" ]]
+then
+    alias fd=fdfind
+    fd_command="fdfind"
+fi
+
+export FZF_DEFAULT_COMMAND="$fd_command --type file --hidden --follow --no-ignore-vcs --exclude .git"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
