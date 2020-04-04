@@ -114,6 +114,9 @@ alias gaic="git add -i && git commit -e"
 alias grh="git reset --hard HEAD"
 alias grst="git reset HEAD -- ."
 
+# quick launch
+alias rr="ranger"
+
 #
 
 fd_command="fd"
