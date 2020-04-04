@@ -1,4 +1,4 @@
-import os, os.path, subprocess
+import datetime, os, os.path, subprocess
 from libqtile.config import Key, Screen, Group, Match, Click, Drag
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
@@ -7,6 +7,7 @@ from libqtile import layout, bar, widget, hook
 
 home = os.path.expanduser('~')
 audio_card_id = 0
+screenshots_path = os.path.join(home, 'Images/screenshots/')
 
 # media
 
@@ -65,6 +66,33 @@ def set_wallpaper(path):
 def refresh_wallpaper():
     os.system(os.path.join(home, ".local/bin/refresh-wallpaper"))
 
+# utils
+
+def get_printscreen_name():
+    now = datetime.datetime.now()
+    filename = '%04d%02d%02d%02d%02d' % (now.year, now.month, now.day, now.hour, now.minute)
+
+    # ensure filename doesn't exists
+    # if it exists, append a marker
+    full_filename = os.path.join(screenshots_path, f'{filename}.png')
+    if os.path.exists(full_filename):
+        i = 1
+        full_filename = os.path.join(screenshots_path, f'{filename} ({str(i)}).png')
+
+        while os.path.exists(full_filename):
+            i += 1
+            full_filename = os.path.join(screenshots_path, f'{filename} ({str(i)}).png')
+
+    return full_filename
+
+def quick_full_printscreen(qtile):
+    filename = get_printscreen_name()
+    qtile.cmd_spawn(f'import -window root "{filename}"')
+
+def printscreen_at_selection(qtile):
+    filename = get_printscreen_name()
+    qtile.cmd_spawn(f'import "{filename}"')
+
 #
 
 super_key = "mod4"
@@ -119,7 +147,13 @@ keys = [
     Key([super_key], "v", lazy.spawn("pavucontrol")),
 
     # quick launch
-    Key([super_key], "t", lazy.spawn("kitty"))
+    Key([super_key], "t", lazy.spawn("kitty")),
+
+    # utils
+
+    # * print screen
+    Key([], "Print", lazy.function(printscreen_at_selection)),
+    Key([super_key], "Print", lazy.function(quick_full_printscreen))
 ]
 
 widget_defaults = dict(
