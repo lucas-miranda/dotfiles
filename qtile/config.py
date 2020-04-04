@@ -239,7 +239,7 @@ mouse = [
     )
 ]
 
-groups = [Group(i) for i in 'asdf']
+groups = [Group(i) for i in 'asdfg']
 
 # throw away groups for random stuff
 for i in groups:
@@ -253,19 +253,24 @@ for i in groups:
             Key([super_key, 'shift'], i.name, lazy.window.togroup(i.name))
     )
 
-groups.extend([
-    Group(
-        'music', 
-        spawn='spotify', 
-        layout='max', 
-        init=True,
-        exclusive=True,
-        persist=True,
-        matches=[
-            Match(wm_class=['spotify', 'Spotify'], wm_instance_class=['spotify', 'Spotify'])
-        ]
-    )
-])
+
+# We simply can't use spotify as a special separated group
+# their implemetation doesn't respect window manager rules
+# see: https://wiki.archlinux.org/index.php/Spotify#Not_respecting_window_manager_rules
+
+#groups.extend([
+#    Group(
+#        'music', 
+#        spawn='spotify', 
+#        layout='max', 
+#        init=True,
+#        exclusive=True,
+#        persist=True,
+#        matches=[
+#            Match(wm_class=['spotify', 'Spotify'], wm_instance_class=['spotify', 'Spotify'])
+#        ]
+#    )
+#])
 
 layouts = [
     layout.Max(),
