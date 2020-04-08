@@ -241,9 +241,38 @@ mouse = [
     )
 ]
 
-groups = [Group(i) for i in 'asdfg']
+groups = [
+    Group(
+        'a',
+        spawn = 'kitty'
+    ),
+    Group(
+        's',
+        spawn = 'vivaldi'
+    ),
 
-# throw away groups for random stuff
+    Group('d'),
+    Group('f'),
+
+    # We simply can't use spotify as a special separated group (e.g 'music')
+    # their implemetation doesn't respect window manager rules
+    # see: https://wiki.archlinux.org/index.php/Spotify#Not_respecting_window_manager_rules
+    #
+    # note: I know spotifywm-git and I just don't wanna install it
+    Group(
+        'g', 
+        spawn = 'spotify', 
+        layout = 'max', 
+        init = True,
+        exclusive = True,
+        persist = True,
+        matches = [
+            Match(wm_class = ['spotify', 'Spotify'], wm_instance_class = ['spotify', 'Spotify'])
+        ]
+    )
+]
+
+# setup group shortcuts
 for i in groups:
     # super + letter of group = switch to group
     keys.append(
@@ -254,25 +283,6 @@ for i in groups:
     keys.append(
             Key([super_key, 'shift'], i.name, lazy.window.togroup(i.name))
     )
-
-
-# We simply can't use spotify as a special separated group
-# their implemetation doesn't respect window manager rules
-# see: https://wiki.archlinux.org/index.php/Spotify#Not_respecting_window_manager_rules
-
-#groups.extend([
-#    Group(
-#        'music', 
-#        spawn='spotify', 
-#        layout='max', 
-#        init=True,
-#        exclusive=True,
-#        persist=True,
-#        matches=[
-#            Match(wm_class=['spotify', 'Spotify'], wm_instance_class=['spotify', 'Spotify'])
-#        ]
-#    )
-#])
 
 layouts = [
     layout.Max(),
