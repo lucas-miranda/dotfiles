@@ -88,10 +88,12 @@ def get_printscreen_name():
 def quick_full_printscreen(qtile):
     filename = get_printscreen_name()
     qtile.cmd_spawn(f'import -window root "{filename}"')
+    qtile.cmd_spawn('notify-send.py "Print Screen - Fullscreen" "Will be saved at:\n\'{filename}\'"')
 
 def printscreen_at_selection(qtile):
     filename = get_printscreen_name()
     qtile.cmd_spawn(f'import "{filename}"')
+    qtile.cmd_spawn(f'notify-send.py "Print Screen - Selection" "Will be saved at:\n\'{filename}\'"')
 
 #
 
