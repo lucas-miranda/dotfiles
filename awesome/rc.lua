@@ -36,22 +36,25 @@ end
 -- Handle runtime errors after startup
 do
     local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then 
-            return 
+    awesome.connect_signal(
+        "debug::error", 
+        function (err)
+            -- Make sure we don't go into an endless error loop
+            if in_error then 
+                return 
+            end
+
+            in_error = true
+
+            naughty.notify({ 
+                preset = naughty.config.presets.critical,
+                title = "Oops, an error happened!",
+                text = tostring(err) 
+            })
+
+            in_error = false
         end
-
-        in_error = true
-
-        naughty.notify({ 
-            preset = naughty.config.presets.critical,
-            title = "Oops, an error happened!",
-            text = tostring(err) 
-        })
-
-        in_error = false
-    end)
+    )
 end
 -- }}}
 
@@ -155,7 +158,9 @@ local taglist_buttons = gears.table.join(
 )
 
 local tasklist_buttons = gears.table.join(
-    awful.button({ }, 1, 
+    awful.button(
+        { }, 
+        1, 
         function (c)
             if c == client.focus then
                 c.minimized = true
@@ -168,17 +173,23 @@ local tasklist_buttons = gears.table.join(
             end
         end
     ),
-    awful.button({ }, 3, 
+    awful.button(
+        { }, 
+        3, 
         function()
             awful.menu.client_list({ theme = { width = 250 } })
         end
     ),
-    awful.button({ }, 4, 
+    awful.button(
+        { }, 
+        4, 
         function ()
             awful.client.focus.byidx(1)
         end
     ),
-    awful.button({ }, 5, 
+    awful.button(
+        { }, 
+        5, 
         function ()
             awful.client.focus.byidx(-1)
         end
@@ -614,14 +625,16 @@ clientbuttons = gears.table.join(
         1, 
         function (c)
             c:emit_signal("request::activate", "mouse_click", { raise = true })
-        end),
+        end
+    ),
     awful.button(
         { modkey }, 
         1, 
         function (c)
             c:emit_signal("request::activate", "mouse_click", { raise = true })
             awful.mouse.client.move(c)
-        end),
+        end
+    ),
     awful.button(
         { modkey }, 
         3, 
