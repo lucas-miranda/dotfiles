@@ -26,7 +26,25 @@ main_screen.layoutbox:buttons(gears.table.join(
 ))
 
 -- text clock
-textclock = wibox.widget.textclock()
+local textclock = wibox.widget.textclock("  %H:%M, %a %d/%m/%Y")
+
+-- media sensors
+local media_sensors = awful.widget.watch(
+    "amixer get Master", 
+    1, 
+    function (widget, stdout)
+        local _, _, volume = string.find(stdout, "%[(%d+)%%%]")
+        local output = ""
+
+        if volume == nil then
+            output = "-"
+        else
+            output = string.format("%d%%", volume)
+        end
+
+        widget:set_text(output)
+    end
+)
 
 -- taglist buttons
 local taglist_buttons = gears.table.join(
@@ -103,19 +121,20 @@ main_screen.wibar:setup {
     -- left widgets
     {
         layout = wibox.layout.fixed.horizontal,
-        main_screen.taglist,
-        main_screen.prompt
+        wibox.container.margin(main_screen.taglist, 5, 5, 0, 0),
+        main_screen.layoutbox
     },
 
-    -- riddle widget
+    -- middle widget
     main_screen.tasklist,
 
     -- right widgets
     {
         layout = wibox.layout.fixed.horizontal,
+        wibox.container.margin(main_screen.prompt, 5, 5, 0, 0),
         wibox.widget.systray(),
-        textclock,
-        main_screen.layoutbox
+        wibox.container.margin(textclock, 5, 5, 0, 0),
+        wibox.container.margin(media_sensors, 5, 10, 0, 0)
     }
 }
 
