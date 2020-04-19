@@ -50,9 +50,10 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -----------------------------
 
 -- local
-local config_dir = awful.util.getdir("config")
+local config_dir = gears.filesystem.get_dir("config")
 
 -- global
+home_dir = os.getenv("HOME")
 terminal = "kitty"
 editor = "nvim"
 editor_cmd = terminal .. " -e " .. editor
