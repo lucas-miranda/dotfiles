@@ -114,14 +114,17 @@ alias gaic="git add -i && git commit -e"
 alias grh="git reset --hard HEAD"
 alias grst="git reset HEAD -- ."
 
-# tools shadowing
+# shadowing
 alias ls="exa"
+alias rm="rm -i"
+alias mv="mv -i"
+alias zz="clear"
 
 # quick launch
 alias rr="ranger"
 alias ase="aseprite"
 
-#
+#################
 
 fd_command="fd"
 
