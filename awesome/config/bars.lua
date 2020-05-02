@@ -14,7 +14,9 @@ awful.tag({ "1", "2", "3", "4", "5" }, main_screen, awful.layout.layouts[1])
 -----------------------
 
 -- prompt
-main_screen.prompt = awful.widget.prompt()
+main_screen.prompt = awful.widget.prompt {
+    prompt = " λ "
+}
 
 -- layout box
 main_screen.layoutbox = awful.widget.layoutbox(s)
@@ -82,15 +84,13 @@ local taglist_buttons = gears.table.join(
 
 local tasklist_buttons = gears.table.join(
     awful.button(
-        { }, 
-        4, 
+        { }, mouse_id.scroll_up, 
         function ()
             awful.client.focus.byidx(1)
         end
     ),
     awful.button(
-        { }, 
-        5, 
+        { }, mouse_id.scroll_down, 
         function ()
             awful.client.focus.byidx(-1)
         end
@@ -121,8 +121,7 @@ main_screen.wibar:setup {
     -- left widgets
     {
         layout = wibox.layout.fixed.horizontal,
-        wibox.container.margin(main_screen.taglist, 5, 5, 0, 0),
-        main_screen.layoutbox
+        wibox.container.margin(main_screen.taglist, 5, 5, 0, 0)
     },
 
     -- middle widget
@@ -134,7 +133,8 @@ main_screen.wibar:setup {
         wibox.container.margin(main_screen.prompt, 5, 5, 0, 0),
         wibox.widget.systray(),
         wibox.container.margin(textclock, 5, 5, 0, 0),
-        wibox.container.margin(media_sensors, 5, 10, 0, 0)
+        wibox.container.margin(media_sensors, 5, 10, 0, 0),
+        main_screen.layoutbox
     }
 }
 
@@ -160,16 +160,7 @@ for i, tag in ipairs(main_screen.tags) do
             { description = "view tag #"..i, group = "tag" }
         ),
 
-        -- toggle tag display
-        awful.key(
-            { super_key, control_key }, key,
-            function ()
-                awful.tag.viewtoggle(tag)
-            end,
-            { description = "toggle tag #" .. i, group = "tag" }
-        ),
-
-        -- Move client to tag.
+        -- move client to tag
         awful.key(
             { super_key, shift_key }, key,
             function ()
@@ -178,17 +169,6 @@ for i, tag in ipairs(main_screen.tags) do
                 end
             end,
             { description = "move focused client to tag #"..i, group = "tag" }
-        ),
-
-        -- Toggle tag on focused client.
-        awful.key(
-            { super_key, control_key, shift_key }, key,
-            function ()
-                if client.focus then
-                    client.focus:toggle_tag(tag)
-                end
-            end,
-            { description = "toggle focused client on tag #" .. i, group = "tag" }
         )
     )
 end

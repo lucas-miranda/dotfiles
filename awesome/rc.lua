@@ -44,13 +44,12 @@ do
     end)
 end
 
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-
 -- Variables
 -----------------------------
 
 -- local
-local config_dir = gears.filesystem.get_dir("config")
+config_dir = gears.filesystem.get_dir("config")
+themes_dir = config_dir .. "/themes"
 
 -- global
 home_dir = os.getenv("HOME")
@@ -74,6 +73,8 @@ mouse_id = {
 
 -- Load
 -----------------------------
+
+beautiful.init(themes_dir .. "/dark/theme.lua")
 
 dofile(config_dir .. "/config/layouts.lua")
 dofile(config_dir .. "/config/globalkeys.lua")
