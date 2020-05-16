@@ -29,6 +29,9 @@ theme.border_marked = "#CC9393"
 theme.titlebar_bg_focus  = "#3F3F3F"
 theme.titlebar_bg_normal = "#3F3F3F"
 
+-- Wibar
+theme.wibar_height = 21
+
 -- Taglist
 theme.taglist_bg_empty      = "#3F3F3F"
 theme.taglist_bg_occupied   = theme.taglist_bg_empty
@@ -49,6 +52,9 @@ theme.prompt_fg_cursor  = "#CF58ED"
 theme.mouse_finder_color = "#CC9393"
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
+
+-- Sensors
+theme.sensor_bg = "#2E2E2E"
 
 -- Icons
 
@@ -73,5 +79,8 @@ theme.layout_cornernw   = themes_dir .. "/dark/layouts/cornernw.png"
 theme.layout_cornerne   = themes_dir .. "/dark/layouts/cornerne.png"
 theme.layout_cornersw   = themes_dir .. "/dark/layouts/cornersw.png"
 theme.layout_cornerse   = themes_dir .. "/dark/layouts/cornerse.png"
+
+-- Sensors
+theme.sensor_harddisk   = "~/.local/share/icons/Arc-ICONS/devices/16/drive-harddisk.png"
 
 return theme

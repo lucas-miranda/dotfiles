@@ -1,11 +1,13 @@
 local gears = gears
 local awful = awful
+local wibox = wibox
+local beautiful = beautiful
 
 -- select main screen
 local main_screen = screen.primary
 
--- Wallpaper
---set_wallpaper(s)
+-- wibox
+main_screen.wibar = awful.wibar({ position = "top", screen = main_screen })
 
 -- tags
 awful.tag({ "1", "2", "3", "4", "5" }, main_screen, awful.layout.layouts[1])
@@ -15,7 +17,7 @@ awful.tag({ "1", "2", "3", "4", "5" }, main_screen, awful.layout.layouts[1])
 
 -- prompt
 main_screen.prompt = awful.widget.prompt {
-    prompt = " λ "
+    prompt = " λ ",
 }
 
 -- layout box
@@ -33,7 +35,7 @@ local textclock = wibox.widget.textclock("  %H:%M, %a %d/%m/%Y")
 -- media sensors
 local media_sensors = awful.widget.watch(
     "amixer get Master", 
-    1, 
+    0.5, 
     function (widget, stdout)
         local _, _, volume = string.find(stdout, "%[(%d+)%%%]")
         local output = ""
@@ -46,6 +48,43 @@ local media_sensors = awful.widget.watch(
 
         widget:set_text(output)
     end
+)
+
+-- network sensors
+local network_sensors = awful.widget.watch(
+    "wget -q --spider https://www.archlinux.org/", 
+    3, 
+    function (widget, stdout, stderr, exitreason, exitcode)
+        local output = " " -- default: not connected
+
+        if exitreason == "exit" and exitcode == 0 then
+            output = "  " -- connected icon
+        end
+
+        widget:set_text(output)
+    end
+)
+
+-- hard disk sensor
+local hard_disk_sensor = awful.widget.watch(
+    'bash -c "df -h | /bin/grep -E "/dev/sda[0-9]+""',
+    10,
+    function (widget, stdout)
+        local _, _, free_space = string.find(stdout, "([0-9,]+%w+)%s+%d+%%%s+.+$")
+        local output = "--"
+
+        if free_space ~= nil and free_space ~= "" then
+            output = free_space
+        end
+
+        widget:set_text(output)
+    end
+)
+
+local hard_disk_image_box = wibox.widget.imagebox(
+    beautiful.sensor_harddisk,
+    false,
+    gears.shape.rectangle
 )
 
 -- taglist buttons
@@ -111,9 +150,6 @@ main_screen.tasklist = awful.widget.tasklist {
     buttons = tasklist_buttons
 }
 
--- Create the wibox
-main_screen.wibar = awful.wibar({ position = "top", screen = main_screen })
-
 -- Add widgets to the wibox
 main_screen.wibar:setup {
     layout = wibox.layout.align.horizontal,
@@ -131,6 +167,49 @@ main_screen.wibar:setup {
     {
         layout = wibox.layout.fixed.horizontal,
         wibox.container.margin(main_screen.prompt, 5, 5, 0, 0),
+        {
+            layout = wibox.container.margin,
+            left = 5,
+            right = 5,
+            {
+                layout = wibox.container.background,
+                bg = beautiful.sensor_bg,
+                {
+                    layout = wibox.container.margin,
+                    left = 5,
+                    right = 5,
+                    {
+                        layout = wibox.layout.fixed.horizontal,
+                        spacing = 15,
+                        fill_space = true,
+                        {
+                            layout = wibox.layout.fixed.horizontal,
+                            spacing = 5,
+                            fill_space = true,
+                            {
+                                widget = wibox.widget.textbox,
+                                markup = "<big>  </big>",
+                                align = "center",
+                                valign = "center"
+                            },
+                            network_sensors
+                        },
+                        {
+                            layout = wibox.layout.fixed.horizontal,
+                            spacing = 3,
+                            fill_space = true,
+                            {
+                                widget = wibox.widget.textbox,
+                                markup = "<big> </big>",
+                                align = "center",
+                                valign = "center"
+                            },
+                            hard_disk_sensor
+                        }
+                    }
+                }
+            }
+        },
         wibox.widget.systray(),
         wibox.container.margin(textclock, 5, 5, 0, 0),
         wibox.container.margin(media_sensors, 5, 10, 0, 0),
