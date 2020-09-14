@@ -121,8 +121,10 @@ alias zz="clear"
 
 # quick launch
 alias rr="ranger"
+alias rrcd='ranger --choosedir=$HOME/.rangerdir; cd $(cat $HOME/.rangerdir); rm -f "$HOME/.rangerdir"'
 alias ase="aseprite"
 alias py="python"
+alias davinci-resolve="prime-run /opt/resolve/bin/resolve"
 
 #################
 
