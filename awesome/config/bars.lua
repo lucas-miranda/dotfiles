@@ -2,6 +2,7 @@ local gears = gears
 local awful = awful
 local wibox = wibox
 local beautiful = beautiful
+local naughty = naughty
 
 -- select main screen
 local main_screen = screen.primary
@@ -18,16 +19,22 @@ awful.tag({ "1", "2", "3", "4", "5" }, main_screen, awful.layout.layouts[1])
 -- prompt
 main_screen.prompt = awful.widget.prompt {
     prompt = " λ ",
+    exe_callback = function (cmd)
+        target_tag_name = main_screen.selected_tag.name
+        awful.spawn.spawn(
+            cmd, 
+            { 
+                tag = target_tag_name,
+            },
+            function (c)
+                c:move_to_tag(target_tag_name)
+            end
+        )
+    end
 }
 
 -- layout box
 main_screen.layoutbox = awful.widget.layoutbox(s)
-main_screen.layoutbox:buttons(gears.table.join(
-    awful.button({ }, 1, function () awful.layout.inc( 1) end),
-    awful.button({ }, 3, function () awful.layout.inc(-1) end),
-    awful.button({ }, 4, function () awful.layout.inc( 1) end),
-    awful.button({ }, 5, function () awful.layout.inc(-1) end)
-))
 
 -- text clock
 local textclock = wibox.widget.textclock("  %H:%M, %a %d/%m/%Y")
@@ -51,6 +58,7 @@ local media_sensors = awful.widget.watch(
 )
 
 -- network sensors
+--[[
 local network_sensors = awful.widget.watch(
     "wget -q --spider https://www.archlinux.org/", 
     3, 
@@ -86,6 +94,7 @@ local hard_disk_image_box = wibox.widget.imagebox(
     false,
     gears.shape.rectangle
 )
+]]
 
 -- taglist buttons
 local taglist_buttons = gears.table.join(
@@ -167,7 +176,7 @@ main_screen.wibar:setup {
     {
         layout = wibox.layout.fixed.horizontal,
         wibox.container.margin(main_screen.prompt, 5, 5, 0, 0),
-        {
+        --[[{
             layout = wibox.container.margin,
             left = 5,
             right = 5,
@@ -209,7 +218,7 @@ main_screen.wibar:setup {
                     }
                 }
             }
-        },
+        },]]
         wibox.widget.systray(),
         wibox.container.margin(textclock, 5, 5, 0, 0),
         wibox.container.margin(media_sensors, 5, 10, 0, 0),

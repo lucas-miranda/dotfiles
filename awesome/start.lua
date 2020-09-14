@@ -20,3 +20,6 @@ awful.screen.connect_for_each_screen(function(scr)
     )
 end)
 
+-- start default programs
+awful.spawn.spawn("kitty", { tag = "1" })
+awful.spawn.spawn("spotify", { tag = "5" })
