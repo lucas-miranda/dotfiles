@@ -80,6 +80,8 @@ plugins=(
     extract
     web-search
     wd
+    sudo
+    zsh-autosuggestions
     grimoire
 )
 
