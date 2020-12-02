@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# starts picom
+if [[ -x "$(command -v picom)" ]]
+then
+    killall -q picom
+    while pgrep -u $UID -x picom >/dev/null; do sleep 1; done
+    picom &> /dev/null & 
+fi
+
+# desktop background
+if [[ -f "$HOME/.local/bin/refresh-wallpaper" ]]
+then
+    $HOME/.local/bin/refresh-wallpaper &> /dev/null &
+fi
+
+# polybar
+killall -q polybar
+while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+polybar top_bar &
