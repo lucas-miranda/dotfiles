@@ -105,6 +105,9 @@ export EDITOR='nvim'
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
+# zshrc
+alias reload="source $HOME/.zshrc"
+
 # git aliases
 alias gl="git log --oneline --graph --max-count=20"
 alias gs="git status"
