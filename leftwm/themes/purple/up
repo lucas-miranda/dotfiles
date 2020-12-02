@@ -1,0 +1,21 @@
+#!/bin/bash
+
+export SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+# starts picom
+if [[ -x "$(command -v picom)" ]]
+then
+  picom &> /dev/null & 
+fi
+
+# load theme.toml
+echo "LoadTheme $SCRIPTPATH/theme.toml" > $XDG_RUNTIME_DIR/leftwm/commands.pipe
+
+# desktop background
+if [[ -f "$HOME/.local/bin/refresh-wallpaper" ]]
+then
+    $HOME/.local/bin/refresh-wallpaper &> /dev/null &
+fi
+
+polybar top_bar &
+

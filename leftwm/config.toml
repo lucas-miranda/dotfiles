@@ -1,0 +1,232 @@
+modkey = "Mod4"
+workspaces = []
+tags = ["1", "2", "3", "4", "5"]
+
+[[keybind]]
+command = "Execute"
+value = "dmenu_run"
+modifier = ["modkey"]
+key = "r"
+
+[[keybind]]
+command = "Execute"
+value = "kitty"
+modifier = ["modkey"]
+key = "t"
+
+#[[keybind]]
+#command = "Execute"
+#value = "pkill leftwm"
+#modifier = ["modkey", "Shift"]
+#key = "x"
+
+#[[keybind]]
+#command = "Execute"
+#value = "slock"
+#modifier = ["modkey", "Control"]
+#key = "l"
+
+# media control
+
+[[keybind]]
+command = "Execute"
+value = "pavucontrol"
+modifier = ["modkey"]
+key = "v"
+
+## volume
+
+[[keybind]]
+command = "Execute"
+value = "amixer --card 0 --quiet set Master 2dB+"
+modifier = []
+key = "XF86XK_AudioRaiseVolume"
+
+[[keybind]]
+command = "Execute"
+value = "amixer --card 0 --quiet set Master 2dB+"
+modifier = ["modkey"]
+key = "equal"
+
+[[keybind]]
+command = "Execute"
+value = "amixer --card 0 --quiet set Master 2dB-"
+modifier = []
+key = "XF86XK_AudioLowerVolume"
+
+[[keybind]]
+command = "Execute"
+value = "amixer --card 0 --quiet set Master 2dB-"
+modifier = ["modkey"]
+key = "minus"
+
+## mute
+
+[[keybind]]
+command = "Execute"
+value = "amixer -D pulse set Master toggle"
+modifier = []
+key = "XF86XK_AudioMute"
+
+## play/pause
+
+[[keybind]]
+command = "Execute"
+value = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+modifier = []
+key = "XF86XK_AudioPlay"
+
+## next track
+
+[[keybind]]
+command = "Execute"
+value = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+modifier = []
+key = "XF86XK_AudioNext"
+
+[[keybind]]
+command = "Execute"
+value = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+modifier = ["modkey"]
+key = "bracketleft"
+
+## previous track
+
+[[keybind]]
+command = "Execute"
+value = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+modifier = []
+key = "XF86XK_AudioPrev"
+
+[[keybind]]
+command = "Execute"
+value = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+modifier = ["modkey"]
+key = "bracketright"
+
+# leftwm
+
+[[keybind]]
+command = "SoftReload"
+modifier = ["modkey", "Shift"]
+key = "r"
+
+[[keybind]]
+command = "CloseWindow"
+modifier = ["modkey"]
+key = "q"
+
+[[keybind]]
+command = "MoveToLastWorkspace"
+modifier = ["modkey", "Shift"]
+key = "w"
+
+[[keybind]]
+command = "SwapTags"
+modifier = ["modkey"]
+key = "w"
+
+[[keybind]]
+command = "MoveWindowUp"
+modifier = ["modkey", "Shift"]
+key = "Up"
+
+[[keybind]]
+command = "MoveWindowDown"
+modifier = ["modkey", "Shift"]
+key = "Down"
+
+[[keybind]]
+command = "MoveWindowTop"
+modifier = ["modkey"]
+key = "Return"
+
+[[keybind]]
+command = "FocusWindowUp"
+modifier = ["modkey"]
+key = "Up"
+
+[[keybind]]
+command = "FocusWindowDown"
+modifier = ["modkey"]
+key = "Down"
+
+[[keybind]]
+command = "NextLayout"
+modifier = ["modkey", "Control"]
+key = "Up"
+
+[[keybind]]
+command = "PreviousLayout"
+modifier = ["modkey", "Control"]
+key = "Down"
+
+[[keybind]]
+command = "FocusWorkspaceNext"
+modifier = ["modkey"]
+key = "Right"
+
+[[keybind]]
+command = "FocusWorkspacePrevious"
+modifier = ["modkey"]
+key = "Left"
+
+[[keybind]]
+command = "GotoTag"
+value = "1"
+modifier = ["modkey"]
+key = "1"
+
+[[keybind]]
+command = "GotoTag"
+value = "2"
+modifier = ["modkey"]
+key = "2"
+
+[[keybind]]
+command = "GotoTag"
+value = "3"
+modifier = ["modkey"]
+key = "3"
+
+[[keybind]]
+command = "GotoTag"
+value = "4"
+modifier = ["modkey"]
+key = "4"
+
+[[keybind]]
+command = "GotoTag"
+value = "5"
+modifier = ["modkey"]
+key = "5"
+
+[[keybind]]
+command = "MoveToTag"
+value = "1"
+modifier = ["modkey", "Shift"]
+key = "1"
+
+[[keybind]]
+command = "MoveToTag"
+value = "2"
+modifier = ["modkey", "Shift"]
+key = "2"
+
+[[keybind]]
+command = "MoveToTag"
+value = "3"
+modifier = ["modkey", "Shift"]
+key = "3"
+
+[[keybind]]
+command = "MoveToTag"
+value = "4"
+modifier = ["modkey", "Shift"]
+key = "4"
+
+[[keybind]]
+command = "MoveToTag"
+value = "5"
+modifier = ["modkey", "Shift"]
+key = "5"
