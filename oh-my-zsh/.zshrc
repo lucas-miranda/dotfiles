@@ -119,6 +119,51 @@ alias gaic="git add -i && git commit -e"
 alias grh="git reset --hard HEAD"
 alias grst="git reset HEAD -- ."
 
+gaac-quick() {
+    if [[ $# -eq 0 ]]
+    then
+        return $(gaac)
+    fi
+
+    local origin_folder=$(pwd)
+    cd "$1"
+    gaac
+    local ret=$?
+    cd "$origin_folder"
+
+    return $ret
+}
+
+gaic-quick() {
+    if [[ $# -eq 0 ]]
+    then
+        return $(gaic)
+    fi
+
+    local origin_folder=$(pwd)
+    cd "$1"
+    gaic
+    local ret=$?
+    cd "$origin_folder"
+
+    return $ret
+}
+
+gp-quick() {
+    if [[ $# -eq 0 ]]
+    then
+        return $(gp)
+    fi
+
+    local origin_folder=$(pwd)
+    cd "$1"
+    gp
+    local ret=$?
+    cd "$origin_folder"
+
+    return $ret
+}
+
 # shadowing
 alias ls="exa"
 alias rm="rm -i"
@@ -131,6 +176,14 @@ alias rrcd='ranger --choosedir=$HOME/.rangerdir; cd $(cat $HOME/.rangerdir); rm 
 alias ase="aseprite"
 alias py="python"
 alias davinci-resolve="prime-run /opt/resolve/bin/resolve"
+alias browser="$DEFAULT_BROWSER"
+alias br="$DEFAULT_BROWSER"
+
+#################
+# plugins config
+
+# zsh-autosuggestions
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 #################
 
