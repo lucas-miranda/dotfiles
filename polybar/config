@@ -1,0 +1,148 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[colors]
+background = #333438
+foreground = #E2E8DD
+foreground-dimmed = #6B6B6B
+primary = #B152FF
+secondary = #01A7C2
+important = #BD2C40
+
+[bar/top_bar]
+monitor =
+width = 100%
+height = 15
+background = ${colors.background}
+foreground = ${colors.foreground}
+padding-left = 0
+padding-right = 1
+fixed-center = false
+;dim-value = 0.7 
+
+line-size = 2
+
+border-top-size = 3
+border-top-color = ${self.background}
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = FiraCode Nerd Font Mono:style=Regular:pixelsize=10;0
+locale = pt_BR.UTF-8
+
+modules-left = i3
+modules-center = xwindow
+modules-right = date pulseaudio
+tray-position = right
+
+[module/ewmh]
+type = internal/xworkspaces
+
+label-active = %name%
+label-active-font = 1
+label-active-foreground = ${colors.primary}
+label-active-underline = ${colors.primary}
+label-active-padding = 1
+
+label-empty = %name%
+label-empty-font = 1
+label-empty-foreground = ${colors.foreground-dimmed}
+;label-empty-underline = ${colors.foreground-dimmed}
+label-empty-padding = 1
+
+label-occupied = %name%
+label-occupied-font = 1
+label-occupied-foreground = ${colors.foreground}
+label-occupied-underline = ${colors.foreground}
+label-occupied-padding = 1
+
+label-urgent = %name%
+label-urgent-font = 1
+label-urgent-foreground = ${colors.important}
+label-urgent-underline = ${colors.important}
+label-urgent-padding = 1
+
+[module/i3]
+type = internal/i3
+
+index-sort = true
+;pin-workspaces = true
+format = <label-state> <label-mode>
+
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-foreground = ${colors.primary}
+
+label-focused = %name%
+label-focused-font = 1
+label-focused-foreground = ${colors.primary}
+label-focused-underline = ${colors.primary}
+label-focused-padding = 1
+
+label-unfocused = %name%
+label-unfocused-font = 1
+label-unfocused-foreground = ${colors.foreground}
+label-unfocused-padding = 1
+
+label-visible = %name%
+label-visible-font = 1
+label-visible-foreground = ${colors.primary}
+label-visible-underline = ${colors.primary}
+label-visible-padding = 1
+
+label-urgent = %name%
+label-urgent-font = 1
+label-urgent-foreground = ${colors.important}
+label-urgent-underline = ${colors.important}
+label-urgent-padding = 1
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:100:...%
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = %a %d/%m/%Y
+time = %H:%M
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-dimmed}
+
+label = " %time%, %date% "
+label-foreground = ${colors.foreground}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = muted
+label-muted-foreground = ${colors.foreground-dimmed}
+
+;click-right = pavucontrol &
+
+; vim:ft=dosini
