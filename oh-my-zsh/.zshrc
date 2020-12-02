@@ -4,6 +4,7 @@
 
 path+=('/home/luke/.cargo/bin')
 path+=('/home/luke/.local/bin')
+path+=('/home/luke/.dotnet/tools')
 export PATH
 
 export XDG_CONFIG_HOME="/home/luke/.config"
