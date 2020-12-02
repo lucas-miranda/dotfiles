@@ -1,0 +1,17 @@
+/usr/bin/firefox %U
+  ^https?://
+
+/usr/bin/opera %U
+  ^https?://
+
+/usr/bin/brave-nightly %U
+  ^https?://
+
+/usr/bin/vivaldi %U
+  ^https?://
+
+/usr/bin/feh -g 1920x1056 --scale-down --auto-zoom %U
+  \.png$
+  \.jpg$
+  \.jpeg$
+  \.svg$
