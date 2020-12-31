@@ -47,8 +47,11 @@ bindsym $super+bracketleft $media_next
 bindsym XF86AudioPrev $media_prev
 bindsym $super+bracketright $media_prev
 
+# applications
 # start a terminal
 bindsym $super+t exec i3-sensible-terminal
+# start a browser
+bindsym $super+b exec firefox
 
 # Use Mouse+$super to drag floating windows to their wanted position
 floating_modifier $super
