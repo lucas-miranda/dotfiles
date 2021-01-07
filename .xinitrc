@@ -30,4 +30,6 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
+xrdb ~/.Xresources
+xrandr --output HDMI-1 --auto --primary --preferred --output LVDS-1 --off
 exec i3
