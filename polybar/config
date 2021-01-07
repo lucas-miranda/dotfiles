@@ -89,28 +89,28 @@ index-sort = true
 ;pin-workspaces = true
 format = <label-state> <label-mode>
 
-label-mode = %mode%
+label-mode = " %mode% "
 label-mode-padding = 2
 label-mode-foreground = ${colors.primary}
 
-label-focused = %name%
+label-focused = " %name% "
 label-focused-font = 1
 label-focused-foreground = ${colors.primary}
 label-focused-underline = ${colors.primary}
 label-focused-padding = 1
 
-label-unfocused = %name%
+label-unfocused = " %name% "
 label-unfocused-font = 1
 label-unfocused-foreground = ${colors.foreground}
 label-unfocused-padding = 1
 
-label-visible = %name%
+label-visible = " %name% "
 label-visible-font = 1
 label-visible-foreground = ${colors.primary}
 label-visible-underline = ${colors.primary}
 label-visible-padding = 1
 
-label-urgent = %name%
+label-urgent = " %name% "
 label-urgent-font = 1
 label-urgent-foreground = ${colors.important}
 label-urgent-underline = ${colors.important}
