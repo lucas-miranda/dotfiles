@@ -2,15 +2,18 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 
-path+=('/home/luke/.cargo/bin')
-path+=('/home/luke/.local/bin')
-path+=('/home/luke/.dotnet/tools')
+path+=('$HOME/.cargo/bin')
+path+=('$HOME/.local/bin')
+path+=('$HOME/.dotnet/tools')
 export PATH
 
-export XDG_CONFIG_HOME="/home/luke/.config"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/luke/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+
+# extra sources
+source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 
 # Good Themes:
 # - Avit
@@ -204,3 +207,4 @@ export FZF_DEFAULT_COMMAND="$fd_command --type file --hidden --follow --no-ignor
 #compinit
 # Completion for kitty
 #~/.local/kitty.app/bin/kitty + complete setup zsh | source /dev/stdin
+
