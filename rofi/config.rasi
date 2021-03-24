@@ -1,6 +1,6 @@
 configuration {
     modi: "run,window";
-    theme: "themes/slate";
+    theme: "themes/raccoon";
     show-icons: true;
     icon-theme: "Papirus";
 }
