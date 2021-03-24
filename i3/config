@@ -59,8 +59,8 @@ floating_modifier $super
 # kill focused window
 bindsym $super+q kill
 
-# start dmenu (a program launcher)
-bindsym $super+r exec --no-startup-id dmenu_run
+# start launcher
+bindsym $super+r exec --no-startup-id rofi -show run
 
 # A more modern dmenu replacement is rofi:
 # bindcode $super+40 exec rofi -modi drun,run -show drun
