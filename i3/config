@@ -47,6 +47,10 @@ bindsym $super+bracketleft $media_next
 bindsym XF86AudioPrev $media_prev
 bindsym $super+bracketright $media_prev
 
+# print
+bindsym --release Print exec --no-startup-id flameshot gui
+bindsym --release Shift+Print exec --no-startup-id flameshot screen -c
+
 # applications
 # start a terminal
 bindsym $super+t exec i3-sensible-terminal
