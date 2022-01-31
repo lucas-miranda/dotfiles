@@ -65,6 +65,7 @@ bindsym $super+q kill
 
 # start launcher
 bindsym $super+r exec --no-startup-id rofi -show run
+bindsym $super+s exec --no-startup-id rofi-pass
 
 # A more modern dmenu replacement is rofi:
 # bindcode $super+40 exec rofi -modi drun,run -show drun
