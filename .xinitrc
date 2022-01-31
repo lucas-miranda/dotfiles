@@ -1,4 +1,8 @@
 #!/bin/sh
+nvidia-settings -l &
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+#xrandr --auto
+xrandr --output HDMI-1 --auto --primary --preferred --output LVDS-1 --off
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
@@ -31,5 +35,12 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 xrdb ~/.Xresources
-xrandr --output HDMI-1 --auto --primary --preferred --output LVDS-1 --off
-exec i3
+
+# user definitions
+export TERMINAL="kitty"
+export BROWSER="firefox"
+export PATH="$HOME/.local/bin:$HOME/.ghcup/bin:$PATH"
+
+# start wm
+#exec i3
+exec ~/.cache/xmonad/xmonad-x86_64-linux
