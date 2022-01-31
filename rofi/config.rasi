@@ -1,6 +1,7 @@
 configuration {
     modi: "run,window";
-    theme: "themes/raccoon";
     show-icons: true;
     icon-theme: "Papirus";
 }
+
+@theme "themes/raccoon"
