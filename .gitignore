@@ -1,5 +1,8 @@
 
+###
 ### xmonad/
+###
+
 xmonad/.gitignore
 xmonad/Session.vim
 xmonad/stack.yaml.lock
@@ -10,7 +13,7 @@ xmonad/*.hi
 xmonad/*.errors
 
 # compiled xmonad executable
-xmonad/xmonad-*
+#xmonad/xmonad-[^/]
 
 # files used by stack
 xmonad/.stack-work/
@@ -21,7 +24,9 @@ xmonad/bin/
 # files automatically created by xmonad
 xmonad/xmonad.state
 
+###
 ### xmobar/
+###
 
 xmobar/xmobar
 
