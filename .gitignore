@@ -2,24 +2,33 @@
 ### xmonad/
 xmonad/.gitignore
 xmonad/Session.vim
+xmonad/stack.yaml.lock
 
 # files produced by compiler
-*.o
-*.hi
-*.errors
+xmonad/*.o
+xmonad/*.hi
+xmonad/*.errors
 
 # compiled xmonad executable
-xmonad-*
+xmonad/xmonad-*
 
 # files used by stack
-.stack-work/
+xmonad/.stack-work/
 
 # directory created by `build` script
-bin/
+xmonad/bin/
 
 # files automatically created by xmonad
-xmonad.state
+xmonad/xmonad.state
 
 ### xmobar/
 
 xmobar/xmobar
+
+# files produced by compiler
+xmobar/*.o
+xmobar/*.hi
+xmobar/*.errors
+
+# files used by stack
+xmobar/.stack-work/
