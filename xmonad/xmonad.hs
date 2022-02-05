@@ -5,6 +5,7 @@ import XMonad.Actions.UpdateFocus
 import XMonad.Config.Desktop
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
 import XMonad.Layout.LayoutModifier
@@ -123,8 +124,9 @@ main :: IO ()
 main = do
     --dirs <- getDirectories
     --xmonad . ewmh . docks $ (baseConfig
-    xmonad . withSB sb . ewmh . docks $ (baseConfig
+    xmonad . withSB sb . ewmhFullscreen . docks $ (baseConfig
         { layoutHook = layoutSpecs
+        , manageHook = windowManage
         , startupHook = startup
         , logHook = logging
         } `additionalKeysP` keybindings) --)
@@ -180,8 +182,21 @@ keybindings =
 --------------------------------------
 -- Layout Specs
 
-layoutSpecs :: ModifiedLayout AvoidStruts (ModifiedLayout WithBorder Full) Window
-layoutSpecs = avoidStruts $ noBorders Full
+layoutSpecs :: ModifiedLayout
+                 SmartBorder
+                 (ModifiedLayout AvoidStruts (ModifiedLayout WithBorder Full))
+                 Window
+layoutSpecs = smartBorders . avoidStruts $ noBorders Full
+
+--------------------------------------
+-- Window Manage
+
+windowManage :: ManageHook
+windowManage = composeAll [
+                            manageDocks
+                          , isFullscreen --> doFullFloat
+                          , manageHook baseConfig
+                          ]
 
 --------------------------------------
 -- Startup
