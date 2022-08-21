@@ -95,6 +95,7 @@ alias py="python"
 alias davinci-resolve="prime-run /opt/resolve/bin/resolve"
 alias browser="$DEFAULT_BROWSER"
 alias br="$DEFAULT_BROWSER"
+alias g="git"
 
 #################
 
@@ -118,6 +119,35 @@ poweroff() {
 
 reboot() {
     confirm shutdown -r now
+}
+
+# extracts files using it's extension to choose the right tool
+# accepts multiple filenames as args
+x() {
+    for filename in "$@"
+    do
+        local ext="${filename##*.}"
+        print -P "%F{magenta}->%f %Bextracting%b  $filename"
+
+        case "$ext" in
+            zip)
+                unzip "$filename"
+                ;;
+            rar)
+                unrar x "$filename"
+                ;;
+            gz)
+                tar -xvzf "$filename"
+                ;;
+            bz2)
+                tar -xvjf "$filename"
+                ;;
+            *)
+                print -P "%B%F{red}extract%f%b  Extension %B$ext%b isn't supported."
+                ;;
+        esac
+        echo
+    done
 }
 
 #################
