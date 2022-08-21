@@ -65,15 +65,15 @@ export EDITOR='nvim'
 alias reload="source $HOME/.zshrc"
 
 # git aliases
-alias gl="git log --oneline --graph --max-count=20"
-alias gs="git status"
-alias gd="git diff"
-alias gpl="git pull"
-alias gp="git push"
-alias gaac="git add . && git commit -e"
-alias gaic="git add -i && git commit -e"
-alias grh="git reset --hard HEAD"
-alias grst="git reset HEAD -- ."
+#alias gl="git log --oneline --graph --max-count=20"
+#alias gs="git status"
+#alias gd="git diff"
+#alias gpl="git pull"
+#alias gp="git push"
+#alias gaac="git add . && git commit -e"
+#alias gaic="git add -i && git commit -e"
+#alias grh="git reset --hard HEAD"
+#alias grst="git reset HEAD -- ."
 
 # neovide
 n() {
