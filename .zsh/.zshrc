@@ -94,7 +94,6 @@ alias ase="aseprite"
 alias py="python"
 alias davinci-resolve="prime-run /opt/resolve/bin/resolve"
 alias browser="$DEFAULT_BROWSER"
-alias br="$DEFAULT_BROWSER"
 alias g="git"
 
 #################
@@ -141,6 +140,9 @@ x() {
                 ;;
             bz2)
                 tar -xvjf "$filename"
+                ;;
+            7z)
+                7z x "$filename"
                 ;;
             *)
                 print -P "%B%F{red}extract%f%b  Extension %B$ext%b isn't supported."
@@ -251,3 +253,16 @@ setopt PUSHD_IGNORE_DUPS
 
 ## This reverts the +/- operators.
 setopt PUSHD_MINUS
+
+# Zoxide - A smarter cd
+# https://github.com/ajeetdsouza/zoxide
+eval "$(zoxide init zsh)"
+
+# broot - A new way to see and navigate directory trees
+# https://github.com/Canop/broot
+source /home/luke/.config/broot/launcher/bash/br
+
+# git diff before commit
+function gg {
+    br --conf ~/.config/broot/git-diff-conf.toml --git-status
+}
