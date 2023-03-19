@@ -1,3 +1,6 @@
+/usr/bin/google-chrome-beta %U
+  ^https?://
+
 /usr/bin/vivaldi-snapshot %U
   ^https?://
 
@@ -19,5 +22,11 @@
   \.jpeg$
   \.svg$
 
+/usr/bin/stremio %U
+  ^stremio:
+
 /usr/bin/jless %U
   \.json$
+
+/usr/bin/qbittorrent %U
+  ^magnet:
