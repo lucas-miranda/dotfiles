@@ -1,7 +1,7 @@
 [include]
     path = ~/.local/share/delta/themes.gitconfig
 [core]
-	editor = nvim
+    editor = nvim
 	pager = delta
 [commit]
 	gpgSign = false
@@ -9,17 +9,42 @@
 	helper = /usr/bin/pass-git-helper
 [alias]
 	graph = log --graph --oneline --decorate
+
+    # push / pull
     p = push
     pl = pull
+
+    # status
     s = status -sb
+    ss = status
+
+    # stash
+    st = stash
+    stl = stash list
+    stp = !git st push -u -m $1
+    stpp = st pop
+
+    # diff
     d = diff
+
+    # log
     l = log --oneline --graph --max-count=20
     ll = log --oneline --graph
+
+    # commit
     c = commit -e
+
+    # checkout
+    ck = checkout
+
+    # add
     aa = add .
     ai = add -i
     aac = !git aa && git c
     aic = !git ai && git c
+
+    # branch
+    b = branch --verbose
 [push]
 	default = simple
 [filter "lfs"]
@@ -29,8 +54,8 @@
 	required = true
 [init]
 	defaultBranch = main
-[interactive]
-    diffFilter = delta --color-only --features=interactive
+#[interactive]
+    #diffFilter = delta --color-only --features=interactive
 [delta]
     #features = zebra-dark
     syntax-theme = OneHalfDark
@@ -40,6 +65,8 @@
 [merge]
     conflictstyle = diff3
 [diff]
-    colorMoved = default
+    tool = meld
+    prompt = false
+    #colorMoved = default
 [color]
 	ui = true
