@@ -7,6 +7,9 @@
 	gpgSign = false
 [credential]
 	helper = /usr/bin/pass-git-helper
+[user]
+    email = miranda.a.lucas@gmail.com
+    name = Lucas Miranda
 [alias]
 	graph = log --graph --oneline --decorate
 
@@ -70,3 +73,6 @@
     #colorMoved = default
 [color]
 	ui = true
+[filter "tabspace"]
+	smudge = unexpand --tabs=4 --first-only
+	clean = expand --tabs=4 --initial

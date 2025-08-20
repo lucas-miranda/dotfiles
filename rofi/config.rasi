@@ -1,5 +1,6 @@
 configuration {
-    modi: "run,window";
+    modes: [window,run,drun,pass,emoji];
+    modi: [run,window];
     show-icons: true;
     icon-theme: "Papirus";
 }

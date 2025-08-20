@@ -184,5 +184,12 @@ verbs: [
         auto_exec: false
         external: "rename {expression} {replacement} {file}"
     }
+
+    {
+        invocation: "touch {args}"
+        leave_broot: false
+        auto_exec: false
+        external: "touch {directory}/{args}"
+    }
 ]
 

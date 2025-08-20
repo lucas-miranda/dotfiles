@@ -80,8 +80,14 @@ n() {
     neovide $@ &
 }
 
+# paru
+p() {
+    # improve search result display
+    paru --bottomup --limit 10 $@
+}
+
 # shadowing
-alias ls="exa"
+alias ls="eza"
 alias rm="rm -i"
 alias mv="mv -i"
 alias zz="clear"
@@ -89,7 +95,7 @@ alias cat="bat --theme Dracula"
 
 # quick launch
 alias rr="ranger"
-alias rrcd='ranger --choosedir=$HOME/.rangerdir; cd "$(cat $HOME/.rangerdir)"; rm -f "$HOME/.rangerdir"'
+alias rrcd='ranger --choosedir=$HOME/.rangerdir; cd "$()"; rm -f "$HOME/.rangerdir"'
 alias ase="aseprite"
 alias py="python"
 alias davinci-resolve="prime-run /opt/resolve/bin/resolve"
@@ -120,6 +126,10 @@ reboot() {
     confirm shutdown -r now
 }
 
+upgrade() {
+    p -Syu && sudo mkinitcpio -P
+}
+
 # extracts files using it's extension to choose the right tool
 # accepts multiple filenames as args
 x() {
@@ -133,7 +143,13 @@ x() {
                 unzip "$filename"
                 ;;
             rar)
-                unrar x "$filename"
+                #x_or_fallback unrar x "$filename"
+                if unrar_loc="$(type -p "unrar")" && [[ $unrar_loc ]]
+                then
+                    unrar x "$filename"
+                else
+                    7z x "$filename"
+                fi
                 ;;
             gz)
                 tar -xvzf "$filename"
@@ -151,6 +167,23 @@ x() {
         echo
     done
 }
+
+#x_or_fallback() {
+#    if x_loc="$(type -p "$1")" && [[ $x_loc ]]
+#        # execute $1 $2 "$3"
+#        return 0
+#    fi
+#
+#    7z x "$filename"
+#
+#    if [[ "$@" == 0 ]]
+#        # if fallback failed
+#        print -P "%B%F{red}extract%f%b  Extension %B$ext%b isn't supported."
+#        return 1
+#    fi
+#
+#    return 0
+#}
 
 #################
 
@@ -266,3 +299,6 @@ source /home/luke/.config/broot/launcher/bash/br
 function gg {
     br --conf ~/.config/broot/git-diff-conf.toml --git-status
 }
+
+GPG_TTY=$(tty)
+export GPG_TTY
