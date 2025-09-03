@@ -80,11 +80,8 @@ n() {
     neovide $@ &
 }
 
-# paru
-p() {
-    # improve search result display
-    paru --bottomup --limit 10 $@
-}
+# arch
+alias p="paru --bottomup --limit 10"
 
 # shadowing
 alias ls="eza"
